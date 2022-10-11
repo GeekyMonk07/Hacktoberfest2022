@@ -96,7 +96,7 @@ main()
       printf("\n2nd Number:");
       show(poly2);
       polyadd(poly1,poly2,poly);
-      printf("\nAdded polynomial:");
+      printf("\nAdded polynomia :");
       show(poly);
       printf("\n add two more numbers:");
       ch=getch();
