@@ -1,0 +1,82 @@
+# include<bits/stdc++.h>
+using namespace std;
+#define ROW_1 4
+#define COL_1 4
+
+#define ROW_2 4
+#define COL_2 4
+
+void addmatrix ( int crr[4][4],int drr[2][2],int i,int j){
+crr[i][j]=drr[0][0];
+    crr[i][j+1]=drr[0][1];
+    crr[i+1][j]=drr[1][0];
+    crr[i+1][j+1]=drr[1][1];
+    drr[0][0]=0;
+    drr[0][1]=0;
+    drr[1][0]=0;
+    drr[1][1]=0;
+}
+int drr[2][2]={0};
+void squarematric(int arr[4][4], int brr[4][4], int crr[4][4], int n, int i, int j,int k,int l)
+{
+    if (n <= 2)
+    {
+        drr[0][0] = drr[0][0] + (arr[i][j] * brr[k][l]) + (arr[i][j + 1] * brr[k + 1][l]);
+        drr[0][1] = drr[0][1] + (arr[i][j] * brr[k][l + 1]) + (arr[i][j + 1] * brr[k + 1][l + 1]);
+        drr[1][0] = drr[1][0] + (arr[i + 1][j] * brr[k][l]) + (arr[i + 1][j + 1] * brr[k + 1][l]);
+        drr[1][1] = drr[1][1] + (arr[i + 1][j] * brr[k][l + 1]) + (arr[i + 1][j + 1] * brr[k + 1][l + 1]);
+    }
+    else
+    {
+        int mid = n / 2;
+        squarematric(arr, brr, crr, mid, i, j, k, l);                 
+        squarematric(arr, brr, crr, mid, i, j+mid, k+mid, l);                 
+        addmatrix(crr,drr,0,0);
+
+        squarematric(arr, brr, crr, mid, i, j ,k,l+mid);              
+        squarematric(arr, brr, crr, mid, i, j+mid, k+mid, l+mid);             
+        addmatrix(crr,drr,0,mid);   
+
+        squarematric(arr, brr, crr, mid, i + mid, j,k,l);            
+        squarematric(arr, brr, crr, mid, i+mid, j+mid, k+mid, l);             
+        addmatrix(crr,drr,mid,0);          
+
+        squarematric(arr, brr, crr, mid, i + mid, j,k,l+mid);         
+        squarematric(arr, brr, crr, mid, i+mid, j+mid, k+mid, l+mid);         
+      addmatrix(crr,drr,mid,mid);        
+    }
+}
+int main(){
+int arr[COL_1][ROW_1];
+int brr[COL_2][ROW_2];
+for(int i=0;i<COL_1;i++){
+    for(int j=0;j<ROW_1;j++){
+        cin>>arr[i][j];
+    }
+    cout<<endl;
+}
+    cout<<"brray"<<endl;;
+    
+    
+    for(int i=0;i<COL_2;i++){
+    for(int j=0;j<ROW_2;j++){
+        cin>>brr[i][j];
+    }
+    cout<<endl;
+}
+int crr[4][4];
+for (int i = 0; i < 4; i++)
+        for (int j = 0; j < 4; j++)
+            crr[i][j]=0;
+
+
+            squarematric(arr,brr,crr,4,0,0,0,0);
+
+for(int i=0;i<4;i++){
+    for(int j=0;j<4;j++){
+        cout<<crr[i][j]<<cout endl;
+    }
+    cout<<endl;
+}
+return 0;
+}
