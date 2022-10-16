@@ -1,0 +1,176 @@
+
+# include<bits/stdc++.h>
+using namespace std;
+class point{
+    public:
+    int x,y;
+};
+int  compareX(const void* a,const void *b){
+    point *p1=(point*)a,*p2=(point*)b;
+return( p1->x-p2->x);
+}
+int  compareY(const void* a,const void *b){
+    point *p1=(point*)a,*p2=(point*)b;
+return( p1->y-p2->y);
+}
+float dist(point p1,point p2){
+   return sqrt((p1.x-p2.x)*(p1.x-p2.x)+(p1.y-p2.y)*(p1.y-p2.y));
+}
+float mindistance(point p[],int n){
+    float min=FLT_MAX;
+    for(int i=0;i<n;i++){
+        for(int j=j+1;j<n;j++){
+            if(dist(p[i],p[j])<min){
+                min=dist(p[i],p[j]);
+            }
+        }
+    }
+    return min;
+}
+float min(float x,float y){
+if(x<y){
+    return x;
+}
+else{
+    return y;
+}
+}
+
+void merge_x(struct point A[],int mid,int lo,int hi)
+{
+    int i=lo,j=mid+1,k=lo;
+    struct point B[100];
+    while(i<=mid && j<=hi)
+    {
+        if(A[i].x<A[j].x)
+        {
+            B[k]=A[i];
+            i++;k++;
+        }
+        else
+        {
+            B[k]=A[j];
+            j++;k++;
+        }
+    }
+    while(i<=mid)
+    {
+        B[k]=A[i];
+        k++;i++;
+    }
+    while(j<=hi)
+    {
+        B[k]=A[j];
+        j++;k++;
+    }
+    for(int w=lo;w<=hi;w++) A[w]=B[w];
+
+}
+void mergesort_x(struct point A[],int lo,int hi)
+{
+   
+   if(lo<hi)
+   {
+    int mid=(lo+hi)/2;
+    mergesort_x(A,lo,mid);
+    mergesort_x(A,mid+1,hi);
+    merge_x(A,mid,lo,hi);
+   }
+
+}
+void merge_y(struct point A[],int mid,int lo,int hi)
+{
+    int i=lo,j=mid+1,k=lo;
+    struct point B[100];
+    while(i<=mid && j<=hi)
+    {
+        if(A[i].y<A[j].y)
+        {
+            B[k]=A[i];
+            i++;k++;
+        }
+        else
+        {
+            B[k]=A[j];
+            j++;k++;
+        }
+    }
+    while(i<=mid)
+    {
+        B[k]=A[i];
+        k++;i++;
+    }
+    while(j<=hi)
+    {
+        B[k]=A[j];
+        j++;k++;
+    }
+    for(int w=lo;w<=hi;w++) A[w]=B[w];
+
+}
+void mergesort_y(struct point A[],int lo,int hi)
+{
+   
+   if(lo<hi)
+   {
+    int mid=(lo+hi)/2;
+    mergesort_y(A,lo,mid);
+    mergesort_y(A,mid+1,hi);
+    merge_y(A,mid,lo,hi);
+   }
+
+}
+
+
+
+
+float stipcolosestpair(point strip[],int n,float d){
+    float min=d;
+    qsort(strip,n,sizeof(point),compareY);
+for(int i=0;i<n;i++){
+for(int j=i+1;j<n &&(strip[j].x-strip[i].x)<min;j++){
+if(dist(strip[i],strip[j])<min){
+    min=dist(strip[i],strip[j]);
+    
+}
+}
+}
+
+return min;
+}
+float closestpair(point p1[],int n){
+    if(n<=3){
+return mindistance(p1,n);
+
+    }
+    else{
+int mid=n/2;
+point midpoint=p1[mid];
+float l=closestpair(p1,mid);
+float r=closestpair(p1+mid,n-mid);
+float distance=min(l,r);
+point strip[n];
+int j=0;
+for(int i=0;i<n;i++)
+{
+    if(abs(p1[i].x-midpoint.x)<distance){
+        strip[j]=p1[i];
+        j++;
+    }
+}
+   
+    return min(distance,stipcolosestpair(strip,j,distance));
+    }
+}
+
+float closestmin(point  p2[],int n){
+ qsort(p2,n,(sizeof(p2)),compareX);
+ return closestpair(p2,n);
+} 
+
+int main(){
+point P[] = {{2, 3}, {12, 30}, {40, 50}, {5, 1}, {12, 10}, {3, 4}}; 
+    int n = sizeof(P) / sizeof(P[0]); 
+    cout << "The smallest distance is " << closestmin(P, n); 
+   
+}
