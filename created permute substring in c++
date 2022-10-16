@@ -1,0 +1,31 @@
+# include<bits/stdc++.h>
+using namespace std;
+void permutesubstring(string str,string permute){
+    if(str.length()==0){
+       // cout<<permute<<endl;
+    }
+    else{
+       for(int i=0;i<str.length();i++){
+         char currentstr=str[i];
+         int ccount =0;
+         
+         cout<<ccount<<endl;;
+         string left=str.substr(0,i);
+         string right=str.substr(i+1);
+         string remainstring= left+right;
+        
+         permutesubstring(remainstring,permute+currentstr);
+         //ccount++;
+
+       } 
+    }
+}
+int main(){
+string str;
+string str2=" ";
+cout<<"enter number of string"<<endl;
+cin>>str;
+cout<<"all possible value of strings are: "<<endl;
+permutesubstring(str,str2);
+return 0;
+}
