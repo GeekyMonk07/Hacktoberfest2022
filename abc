@@ -1,0 +1,23 @@
+/* This program swaps the nodes of linked list rather*/
+#include <bits/stdc++.h>
+using namespace std;
+
+/* A linked list node */
+class Node {
+public:
+	int data;
+	Node* next;
+};
+
+/* Function to swap nodes x and y in linked list by
+changing links */
+void swapNodes(Node** head_ref, int x, int y)
+{
+	// Nothing to do if x and y are same
+	if (x == y)
+		return;
+
+	// Search for x (keep track of prevX and CurrX
+	Node *prevX = NULL, *currX = *head_ref;
+	while (currX && currX->data != x) {
+		prevX = currX;
